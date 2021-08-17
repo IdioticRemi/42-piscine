@@ -1,0 +1,1 @@
+find . -type f -name "*.sh" -execdir printf '%s\n' {} + | sed 's/...$//'

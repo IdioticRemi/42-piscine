@@ -1,0 +1,1 @@
+ifconfig -a link | sed -n 's/.*ether //p' | tr -d ' '
