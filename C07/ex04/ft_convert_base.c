@@ -11,53 +11,88 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <printf.h>
 
-int	ft_cnv_fb10(int nbr, char *base, char *nbrfin, int index);
-int	ft_atoi_base(char *str, char *base);
-int	ft_nbrlen(int number, const char *base);
+int		ft_strlen(char *str);
+void	ft_encodenbr_base(int nbr, char *base, char *nb_dest);
 
-int	ft_strlen(const char *str)
+int	ft_index(char c, const char *str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
 		i++;
-	return (i);
+	}
+	return (-1);
+}
+
+int	ft_isnbr_b(char c, char *base)
+{
+	while (*base)
+	{
+		if (*base == c)
+			return (1);
+		base++;
+	}
+	return (0);
 }
 
 int	base_is_valid(char *base)
 {
 	int	i;
 
-	if (base[0] == '\0' || base[1] == '\0')
+	if (ft_strlen(base) <= 1)
 		return (0);
 	while (*base)
 	{
 		i = 0;
 		while (base[i++])
-			if (*base == base[i] || base[i] == '-' || base[i] == '+')
+			if (*base == base[i] || base[i] == '-' || base[i] == '+'
+				|| base[i] == '\t' || base[i] == '\n' || base[i] == '\v'
+				|| base[i] == '\f' || base[i] == '\r' || base[i] == ' ')
 				return (0);
 		base++;
 	}
 	return (1);
 }
 
+int	ft_atoi_base(char *str, char *base)
+{
+	int	x;
+	int	sign;
+
+	x = 0;
+	sign = 1;
+	if (!base_is_valid(base))
+		return (0);
+	while (*str && (*str == '\t' || *str == '\n' || *str == '\v'
+			|| *str == '\f' || *str == '\r' || *str == ' '))
+		str++;
+	while (!ft_isnbr_b(*(str), base))
+	{
+		sign *= ((*str == '+') * 1) + ((*str == '-') * -1);
+		str++;
+	}
+	while (ft_isnbr_b(*str, base))
+	{
+		x = x * ft_strlen(base) + ft_index(*str, base);
+		str++;
+	}
+	return (sign * x);
+}
+
 char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 {
-	char	*nbrfin;
-	int		nbr_int;
-	int		last;
+	int		nb_int;
+	char	*nb_converti;
 
-	if (!nbr || !base_is_valid(base_from) || !base_is_valid(base_to))
-		return (NULL);
-	while (*nbr && (*nbr == '\t' || *nbr == '\n' || *nbr == '\v'
-			|| *nbr == '\f' || *nbr == '\r' || *nbr == ' '))
-		nbr++;
-	nbr_int = ft_atoi_base(nbr, base_from);
-	nbrfin = malloc(ft_nbrlen(nbr_int, base_to) * sizeof(char));
-	last = ft_cnv_fb10(nbr_int, base_to, nbrfin, ft_nbrlen(nbr_int, base_to));
-	nbrfin[last] = '\0';
-	return (nbrfin);
+	if (!base_is_valid(base_from) || !base_is_valid(base_to))
+		return (0);
+	nb_converti = malloc(64);
+	nb_int = ft_atoi_base(nbr, base_from);
+	ft_encodenbr_base(nb_int, base_to, nb_converti);
+	return (nb_converti);
 }

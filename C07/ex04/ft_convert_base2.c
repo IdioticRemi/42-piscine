@@ -10,86 +10,55 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(const char *str);
-
-int	ft_isnbr(char c, char *base)
-{
-	while (*base)
-	{
-		if (*base == c)
-			return (1);
-		base++;
-	}
-	return (0);
-}
-
-int	ft_index(char c, const char *str)
+unsigned int	ft_strlen(const char *str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
+		i++;
+	return (i);
+}
+
+void	strev(char *str, int offset_of_center)
+{
+	int		len;
+	int		i;
+	char	temp;
+
+	len = ft_strlen(str);
+	i = 0;
+	while (i < len / 2)
 	{
-		if (str[i] == c)
-			return (i);
+		temp = str[i + offset_of_center];
+		str[i + offset_of_center] = str[len - i - 1];
+		str[len - i - 1] = temp;
 		i++;
 	}
-	return (-1);
 }
 
-int	ft_nbrlen(int number, const char *base)
+void	ft_encodenbr_base(int nbr, char *base, char *nb_dest)
 {
-	long	nbr;
-	int		length;
-	int		base_length;
+	unsigned int	lenbase;
+	unsigned int	nbr_unsigned;
+	int				i;
 
-	nbr = (long) number * ((number < 0) * -1 + (number >= 0) * 1);
-	base_length = ft_strlen(base);
-	length = 0;
-	while (nbr >= base_length)
-	{
-		++length;
-		nbr /= base_length;
-	}
-	return (length + 1);
-}
-
-int	ft_atoi_base(char *str, char *base)
-{
-	int	x;
-	int	sign;
-
-	x = 0;
-	sign = 1;
-	while (!ft_isnbr(*(str), base))
-	{
-		sign *= ((*str == '+') * 1) + ((*str == '-') * -1);
-		str++;
-	}
-	while (ft_isnbr(*str, base))
-	{
-		x = x * ft_strlen(base) + ft_index(*str, base);
-		str++;
-	}
-	return (sign * x);
-}
-
-int	ft_cnv_fb10(int nbr, char *base, char *nbrfin, int index)
-{
-	unsigned int	nb;
-	unsigned int	base_len;
-
-	base_len = ft_strlen(base);
+	i = 0;
 	if (nbr < 0)
 	{
-		nbrfin[0] = '-';
-		index++;
-		nb = nbr * -1;
+		nb_dest[i++] = '-';
+		nbr_unsigned = (unsigned int)(-1 * nbr);
 	}
 	else
-		nb = nbr;
-	if (nb >= base_len)
-		ft_cnv_fb10(nb / base_len, base, nbrfin, index - 1);
-	nbrfin[index - 1] = base[nb % base_len];
-	return (index);
+		nbr_unsigned = (unsigned int)nbr;
+	lenbase = ft_strlen(base);
+	if (nbr_unsigned == 0)
+		nb_dest[i++] = *(base);
+	while (nbr_unsigned > 0)
+	{
+		nb_dest[i++] = *(base + (nbr_unsigned % lenbase));
+		nbr_unsigned /= lenbase;
+	}
+	nb_dest[i] = 0;
+	strev(nb_dest, nbr < 0);
 }

@@ -33,18 +33,27 @@ unsigned int	ft_strlen(const char *str)
 	return (i);
 }
 
+int	ft_get_length(int size, char *sep, char **strs)
+{
+	unsigned int	gsize;
+	unsigned int	i;
+
+	gsize = (size - 1) * ft_strlen(sep) + 1;
+	i = -1;
+	while (++i < (unsigned) size)
+		gsize += ft_strlen(strs[i]);
+	return (gsize);
+}
+
 char	*ft_strjoin(int size, char **strs, char *sep)
 {
 	char			*str;
-	unsigned int	global_size;
 	unsigned int	offset;
 	unsigned int	i;
 
-	global_size = (size - 1) * ft_strlen(sep) + 1;
-	i = -1;
-	while (++i < (unsigned) size)
-		global_size += ft_strlen(strs[i]);
-	str = malloc(global_size * sizeof(char));
+	if (!size)
+		return ("");
+	str = malloc(ft_get_length(size, sep, strs) * sizeof(char));
 	if (!str)
 		return (NULL);
 	i = -1;

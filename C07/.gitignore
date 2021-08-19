@@ -1,0 +1,5 @@
+*
+!ex*/
+!ex*/*.c
+!ex*/Makefile
+!.gitignore

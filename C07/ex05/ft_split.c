@@ -1,5 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tjolivea <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/17 22:13:14 by tjolivea          #+#    #+#             */
+/*   Updated: 2021/08/17 22:13:15 by tjolivea         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
-#include <printf.h>
 
 char	*ft_strncpy(char *dest, const char *src, unsigned int n)
 {
@@ -91,19 +102,4 @@ char	**ft_split(char *str, char *charset)
 	}
 	strs[wc] = 0;
 	return (strs);
-}
-
-int main(int argc, char **argv)
-{
-	char	*str = argv[argc - 2];
-	char	*sep = argv[argc - 1];
-
-	char 	**final = ft_split(str, sep);
-
-	printf("[ ");
-	while (*final) {
-		printf("'%s' ", *final);
-		final++;
-	}
-	printf("]");
 }

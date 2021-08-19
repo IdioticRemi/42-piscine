@@ -11,27 +11,21 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <printf.h>
 
 int	ft_ultimate_range(int **range, int min, int max)
 {
 	int	i;
 
+	i = 0;
 	if (min >= max)
 	{
 		*range = NULL;
-		return (-1);
+		return (0);
 	}
-	*range = malloc((max - min) * sizeof(int));
+	*range = malloc(sizeof(int) * (max - min));
 	if (!*range)
-	{
-		*range = NULL;
 		return (-1);
-	}
-	i = -1;
-	while (++i < max - min)
-	{
-		(*range)[i] = min + i;
-	}
+	while (min < max)
+		(*range)[i++] = min++;
 	return (i);
 }

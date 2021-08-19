@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <printf.h>
 
 unsigned int	ft_strlen(const char *str)
 {
@@ -34,5 +33,6 @@ char	*ft_strdup(char *src)
 	i = -1;
 	while (src[++i])
 		dup[i] = src[i];
+	dup[i] = 0;
 	return (dup);
 }
