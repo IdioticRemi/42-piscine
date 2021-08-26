@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strstr.c                                        :+:      :+:    :+:   */
+/*   ft_create_elem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjolivea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 05:36:43 by tjolivea          #+#    #+#             */
-/*   Updated: 2021/08/25 05:37:55 by tjolivea         ###   ########lyon.fr   */
+/*   Created: 2021/08/26 11:50:47 by tjolivea          #+#    #+#             */
+/*   Updated: 2021/08/26 11:50:48 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdlib.h>
+#include "ft_list.h"
 
-char	*ft_strstr(char *str, char *to_find)
+t_list	*ft_create_elem(void *data)
 {
-	int		i;
-	int		j;
+	t_list	*new;
 
-	i = 0;
-	j = 0;
-	if (to_find[0] == '\0')
-		return (str);
-	while (str[i])
-	{
-		while (str[i + j] && to_find[j] && str[i + j] == to_find[j])
-			j++;
-		if (to_find[j] == '\0')
-			return (&str[i]);
-		i++;
-		j = 0;
-	}
-	return ((void *)0);
+	new = malloc(sizeof(t_list));
+	if (!new)
+		return (NULL);
+	new->data = data;
+	new->next = NULL;
+	return (new);
 }

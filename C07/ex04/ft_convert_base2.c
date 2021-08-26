@@ -26,7 +26,7 @@ void	strev(char *str, int offset_of_center)
 	int		i;
 	char	temp;
 
-	len = ft_strlen(str);
+	len = (int) ft_strlen(str);
 	i = 0;
 	while (i < len / 2)
 	{
@@ -59,6 +59,6 @@ void	ft_encodenbr_base(int nbr, char *base, char *nb_dest)
 		nb_dest[i++] = *(base + (nbr_unsigned % lenbase));
 		nbr_unsigned /= lenbase;
 	}
-	nb_dest[i] = 0;
+	nb_dest[i] = '\0';
 	strev(nb_dest, nbr < 0);
 }

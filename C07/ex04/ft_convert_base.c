@@ -6,11 +6,12 @@
 /*   By: tjolivea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/17 15:26:53 by tjolivea          #+#    #+#             */
-/*   Updated: 2021/08/17 15:26:55 by tjolivea         ###   ########lyon.fr   */
+/*   Updated: 2021/08/23 11:46:11 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <printf.h>
 
 int		ft_strlen(char *str);
 void	ft_encodenbr_base(int nbr, char *base, char *nb_dest);
@@ -91,7 +92,7 @@ char	*ft_convert_base(char *nbr, char *base_from, char *base_to)
 
 	if (!base_is_valid(base_from) || !base_is_valid(base_to))
 		return (0);
-	nb_converti = malloc(64);
+	nb_converti = malloc(69);
 	nb_int = ft_atoi_base(nbr, base_from);
 	ft_encodenbr_base(nb_int, base_to, nb_converti);
 	return (nb_converti);

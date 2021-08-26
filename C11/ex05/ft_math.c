@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strstr.c                                        :+:      :+:    :+:   */
+/*   ft_math.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjolivea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 05:36:43 by tjolivea          #+#    #+#             */
-/*   Updated: 2021/08/25 05:37:55 by tjolivea         ###   ########lyon.fr   */
+/*   Created: 2021/08/25 10:02:44 by tjolivea          #+#    #+#             */
+/*   Updated: 2021/08/25 10:02:48 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-
-char	*ft_strstr(char *str, char *to_find)
+int	ft_add(int vals[2])
 {
-	int		i;
-	int		j;
+	return (vals[0] + vals[1]);
+}
 
-	i = 0;
-	j = 0;
-	if (to_find[0] == '\0')
-		return (str);
-	while (str[i])
-	{
-		while (str[i + j] && to_find[j] && str[i + j] == to_find[j])
-			j++;
-		if (to_find[j] == '\0')
-			return (&str[i]);
-		i++;
-		j = 0;
-	}
-	return ((void *)0);
+int	ft_sub(int vals[2])
+{
+	return (vals[0] - vals[1]);
+}
+
+int	ft_mul(int vals[2])
+{
+	return (vals[0] * vals[1]);
+}
+
+int	ft_div(int vals[2])
+{
+	return (vals[0] / vals[1]);
+}
+
+int	ft_mod(int vals[2])
+{
+	return (vals[0] % vals[1]);
 }

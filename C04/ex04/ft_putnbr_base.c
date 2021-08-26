@@ -5,60 +5,73 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjolivea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/10 13:40:26 by tjolivea          #+#    #+#             */
-/*   Updated: 2021/08/10 13:40:27 by tjolivea         ###   ########lyon.fr   */
+/*   Created: 2021/08/25 05:50:17 by tjolivea          #+#    #+#             */
+/*   Updated: 2021/08/25 05:53:17 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-
-int	base_is_valid(char *base)
-{
-	int	i;
-
-	if (base[0] == '\0' || base[1] == '\0')
-		return (0);
-	while (*base)
-	{
-		i = 0;
-		while (base[i++])
-			if (*base == base[i] || base[i] == '-' || base[i] == '+')
-				return (0);
-		base++;
-	}
-	return (1);
-}
 
 void	ft_putchar(char c)
 {
 	write(1, &c, 1);
 }
 
-void	ft_putnbr_base(int nb, char *base)
+int	ft_strlen(char *str)
 {
-	long	nbr;
-	long	final[256];
-	long	i;
+	int	i;
 
 	i = 0;
-	nbr = (long)nb;
-	if (base_is_valid(base))
+	while (str[i] != '\0')
 	{
-		if (nbr == 0)
-			return ((void) ft_putchar(base[0]));
-		if (nbr < 0)
-		{
-			nbr = -nbr;
-			ft_putchar('-');
-		}
-		while (base[final[255]])
-			final[255]++;
-		while (nbr)
-		{
-			final[i++] = nbr % final[255];
-			nbr = nbr / final[255];
-		}
-		while (--i >= 0)
-			ft_putchar(base[final[i]]);
+		i++;
 	}
+	return (i);
+}
+
+int	ft_validation(char *base)
+{
+	int			l;
+	int			x;
+	char		char_to_search;
+
+	l = ft_strlen(base);
+	if (l < 2)
+		return (1);
+	l = 0;
+	while (base[l] != '\0')
+	{
+		x = 1;
+		char_to_search = base[l];
+		if (char_to_search == '-' || char_to_search == '+')
+			return (1);
+		while (char_to_search != base[l + x] && base[l + x] != '\0')
+			x++;
+		if (base[l + x] != '\0')
+			return (1);
+		l++;
+	}
+	return (0);
+}
+
+void	ft_putnbr_base(int nbr, char *base)
+{
+	unsigned int	base_lenght;
+	unsigned int	x;
+
+	x = nbr;
+	base_lenght = ft_strlen(base);
+	if (ft_validation(base) == 1)
+		return ;
+	if (nbr < 0)
+	{
+		ft_putchar('-');
+		x = -x;
+	}
+	if (x > base_lenght - 1)
+	{
+		ft_putnbr_base(x / base_lenght, base);
+		x %= base_lenght;
+	}
+	ft_putchar(base[x]);
 }

@@ -5,69 +5,78 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tjolivea <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/16 16:13:04 by tjolivea          #+#    #+#             */
-/*   Updated: 2021/08/16 16:13:05 by tjolivea         ###   ########lyon.fr   */
+/*   Created: 2021/08/25 06:14:02 by tjolivea          #+#    #+#             */
+/*   Updated: 2021/08/25 06:14:11 by tjolivea         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-char	*ft_strcpy(char *dest, char *src)
-{
-	char	*res;
-
-	res = dest;
-	while (*src != '\0')
-		*dest++ = *src++;
-	*dest = *src;
-	return (res);
-}
-
-unsigned int	ft_strlen(const char *str)
+int	ft_strlen(char *str)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
+	{
 		i++;
+	}
 	return (i);
 }
 
-int	ft_get_length(int size, char *sep, char **strs)
+void	write_str(char **dest, char *str, int *pos)
 {
-	unsigned int	gsize;
-	unsigned int	i;
+	int	i;
 
-	gsize = (size - 1) * ft_strlen(sep) + 1;
-	i = -1;
-	while (++i < (unsigned) size)
-		gsize += ft_strlen(strs[i]);
-	return (gsize);
+	i = 0;
+	while (str[i])
+	{
+		*((*dest) + (sizeof(char) * (*pos))) = str[i];
+		i++;
+		(*pos)++;
+	}
+}
+
+int	ft_totalsize(int size, char **strs)
+{
+	int	i;
+	int	total;
+
+	i = 0;
+	total = 0;
+	while (i < size)
+	{
+		total += ft_strlen(strs[i]);
+		i++;
+	}
+	return (total);
 }
 
 char	*ft_strjoin(int size, char **strs, char *sep)
 {
-	char			*str;
-	unsigned int	offset;
-	unsigned int	i;
+	int		count;
+	int		countchar;
+	int		total;
+	char	*tab;
 
-	if (!size)
-		return ("");
-	str = malloc(ft_get_length(size, sep, strs) * sizeof(char));
-	if (!str)
-		return (NULL);
-	i = -1;
-	offset = 0;
-	while (++i < (unsigned) size)
+	count = 0;
+	countchar = 0;
+	if (size == 0)
 	{
-		ft_strcpy(str + offset, strs[i]);
-		offset += ft_strlen(strs[i]);
-		if (i < (unsigned) size - 1)
-		{
-			ft_strcpy(str + offset, sep);
-			offset += ft_strlen(sep);
-		}
+		tab = malloc(sizeof(char));
+		tab[0] = '\0';
+		return (tab);
 	}
-	str[offset] = '\0';
-	return (str);
+	total = ft_totalsize(size, strs);
+	tab = malloc(sizeof(char) * (total + ft_strlen(sep) * (size - 1)) + 1);
+	if (!tab)
+		return (NULL);
+	while (count < size - 1)
+	{
+		write_str(&tab, strs[count++], &countchar);
+		write_str(&tab, sep, &countchar);
+	}
+	write_str(&tab, strs[count], &countchar);
+	tab[countchar] = '\0';
+	return (tab);
 }
